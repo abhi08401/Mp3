@@ -30,7 +30,7 @@ import android.media.MediaPlayer;
  * Created by abhinandan.sharma on 10/6/2015.
  */
 public class Playing_Activity extends Activity implements MediaPlayerControl {
-    MusicController controller;
+    public MusicController controller;
     private boolean paused=false, playbackPaused=false;
     private int Songposition;
     MusicService musicService;
@@ -48,9 +48,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         if(intent != null) {
             Songposition = intent.getIntExtra("Song_number", 0);
         }
-        if(player == null) {
-            player = new MediaPlayer();
-        }
+
 
     }
     @Override
@@ -60,13 +58,16 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         super.onStart();
         Intent StartSongService = new Intent(this, MusicService.class);
         bindService(StartSongService, mConnection, Context.BIND_AUTO_CREATE);
+
         //startService(StartSongService);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("abhi","onResume_playing_activity");
+        Log.d("abhi", "onResume_playing_activity");
+
+
 
         /*if(paused) {
 
@@ -91,8 +92,9 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
             musicService.setList(MainActivity.songList);
             musicService.setSong(Songposition);
             setController();
-            controller.show();
             musicService.playSong();
+
+
 
             mBound = true;
         }
@@ -157,7 +159,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     }
     private void setController(){
         controller = new MusicController(Playing_Activity.this);
-        Log.e("abhi", "controller " + controller);
+        Log.e("abhi", "setController");
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,6 +174,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         controller.setMediaPlayer(Playing_Activity.this);
         controller.setAnchorView(findViewById(R.id.song_list));
         controller.setEnabled(true);
+        controller.show();
+
 
     }
 

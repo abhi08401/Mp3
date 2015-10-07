@@ -26,6 +26,7 @@ import android.app.PendingIntent;
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener,MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener  {
     private final IBinder mBinder = new MusicBinder();
+    public MusicController controller;
 
     //media player
     public MediaPlayer player;
@@ -109,7 +110,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        Log.d("abhi","onPrepared");
+        Log.d("abhi", "onPrepared");
 
 
         mp.start();

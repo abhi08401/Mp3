@@ -9,7 +9,7 @@ import android.widget.MediaController;
  * Created by abhinandan.sharma on 10/5/2015.
  */
 public class MusicController extends MediaController {
-    private MediaController mediaController;
+    public  MediaController mediaController;
 
     /**
      * Create a new MediaController from a session's token.
