@@ -23,6 +23,8 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
+
 
 /**
  * Created by abhinandan.sharma on 10/6/2015.
@@ -97,6 +99,10 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     protected void onPause(){
         super.onPause();
         paused=true;
+        Log.d("abhi","onPause2");
+
+
+
     }
 
     @Override
