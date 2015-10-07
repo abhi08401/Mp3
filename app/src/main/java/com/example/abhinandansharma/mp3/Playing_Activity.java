@@ -36,30 +36,37 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     MusicService musicService;
     boolean mBound = false;
     private Intent intent;
+    public MediaPlayer player;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("abhi", "onCreate2");
+        Log.d("abhi", "onCreate_playing_activity");
         setContentView(R.layout.playing_activity);
         intent = getIntent();
         if(intent != null) {
             Songposition = intent.getIntExtra("Song_number", 0);
         }
+        if(player == null) {
+            player = new MediaPlayer();
+        }
 
     }
     @Override
     protected void onStart() {
+        Log.d("abhi", "onStart_playing_activity");
+
         super.onStart();
         Intent StartSongService = new Intent(this, MusicService.class);
         bindService(StartSongService, mConnection, Context.BIND_AUTO_CREATE);
-        startService(StartSongService);
+        //startService(StartSongService);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("abhi","ab");
+        Log.d("abhi","onResume_playing_activity");
 
         /*if(paused) {
 
@@ -69,8 +76,9 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     }
     @Override
     protected void onStop() {
-        controller.hide();
         super.onStop();
+        Log.d("abhi", "onStop_playing_activity");
+        controller.hide();
     }
 
     private MusicService.MusicBinder musicBinder;
@@ -82,10 +90,11 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
             musicService = musicBinder.getService();
             musicService.setList(MainActivity.songList);
             musicService.setSong(Songposition);
-            mBound = true;
             setController();
-            musicService.playSong();
             controller.show();
+            musicService.playSong();
+
+            mBound = true;
         }
 
         @Override
@@ -99,7 +108,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     protected void onPause(){
         super.onPause();
         paused=true;
-        Log.d("abhi","onPause2");
+        Log.d("abhi","onPause_playing_activity");
 
 
 
@@ -107,8 +116,15 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
 
     @Override
     protected void onDestroy() {
-        Log.d("abhi", "onDestroy");
+        Log.d("abhi", "onDestroy_playing_activity");
+        if(player != null) {
+            player.release();
+            // Set the MediaPlayer to null to avoid IlLegalStateException
+            // when call mp.reset() after launching the app again
+            player = null;
+        }
         super.onDestroy();
+
         try {
         if (mBound) {
             unbindService(mConnection);
@@ -140,8 +156,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         controller.show(0);
     }
     private void setController(){
-        controller = new MusicController(this);
-        Log.e("abhi","controller "+controller);
+        controller = new MusicController(Playing_Activity.this);
+        Log.e("abhi", "controller " + controller);
         controller.setPrevNextListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +169,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
                 playPrev();
             }
         });
-        controller.setMediaPlayer(this);
+        controller.setMediaPlayer(Playing_Activity.this);
         controller.setAnchorView(findViewById(R.id.song_list));
         controller.setEnabled(true);
 
@@ -162,6 +178,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("abhi","onOptionsItemSelected_playing_activity");
+
         //menu item selected
         switch (item.getItemId()) {
             case R.id.action_shuffle:
@@ -178,6 +196,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.e("abhi","onCreateOptionsMenu_playing_activity");
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

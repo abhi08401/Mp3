@@ -28,7 +28,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private final IBinder mBinder = new MusicBinder();
 
     //media player
-    private MediaPlayer player;
+    public MediaPlayer player;
     //song list
     private ArrayList<Song> songs;
     //current position
@@ -40,6 +40,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public void onCreate() {
+        Log.d("abhi","onCreate_service");
+
         super.onCreate();
         songPosn=0;
         //create player
@@ -59,6 +61,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     public void setList(ArrayList<Song> theSongs){
+        Log.d("abhi","setList");
+
         songs = theSongs;
     }
 
@@ -85,6 +89,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        Log.d("abhi","onCompletion");
+
+
         if(player.getCurrentPosition()>0){
             mp.reset();
             playNext();
@@ -94,12 +101,17 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+        Log.d("abhi","onError");
+
         mp.reset();
         return false;
     }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        Log.d("abhi","onPrepared");
+
+
         mp.start();
         Intent notIntent = new Intent(this, MainActivity.class);
         notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -119,12 +131,14 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         startForeground(NOTIFY_ID, not);
     }
     public void setSong(int songIndex){
+        Log.d("abhi","setSong");
+
         songPosn=songIndex;
     }
 
     public class MusicBinder extends Binder {
         MusicService getService() {
-            Log.d("abhi", "MusicBinder");
+            Log.d("abhi", "getService");
 
             // Return this instance of LocalService so clients can call public methods
             return MusicService.this;
@@ -133,12 +147,15 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d("abhi", "onBind");
+
         return mBinder;
     }
 
     /** method for clients */
     @Override
     public boolean onUnbind(Intent intent){
+        Log.d("abhi", "onUnbind");
         player.stop();
         player.release();
         return false;
@@ -188,7 +205,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
     @Override
     public void onDestroy() {
+        Log.d("abhi", "onDestroy_service");
+
+
         stopForeground(true);
+
     }
     public void setShuffle(){
         if(shuffle) shuffle=false;

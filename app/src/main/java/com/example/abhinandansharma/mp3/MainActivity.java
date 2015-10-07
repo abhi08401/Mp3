@@ -8,6 +8,7 @@ package com.example.abhinandansharma.mp3;
 
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.MediaController.MediaPlayerControl;
@@ -35,6 +36,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity  {
     public static ArrayList<Song> songList;
     private ListView songView;
+    public MediaPlayer player;
+
 
 
     @Override
@@ -97,6 +100,8 @@ public class MainActivity extends Activity  {
 
     @Override
     protected void onDestroy() {
+
+
         super.onDestroy();
     }
 
