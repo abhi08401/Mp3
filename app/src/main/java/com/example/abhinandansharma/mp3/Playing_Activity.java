@@ -57,6 +57,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("abhi","ab");
+
         /*if(paused) {
 
             paused = false;
@@ -81,7 +83,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
             mBound = true;
             setController();
             musicService.playSong();
-            controller.showController();
+            controller.show();
         }
 
         @Override

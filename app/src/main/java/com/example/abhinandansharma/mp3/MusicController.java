@@ -21,19 +21,16 @@ public class MusicController extends MediaController {
         mediaController = new MediaController(c);
     }
 
-    void showController () {
-        mediaController.show();
-    }
+
 
     @Override
     public void hide(){}
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        //the MediaController will hide after 3 seconds - tap the screen to make it appear again
-
-        mediaController.show();
-        return false;
+    public void show() {
+        super.show();
     }
-
-
 }
+
+
+
