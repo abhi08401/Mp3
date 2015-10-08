@@ -2,6 +2,7 @@ package com.example.abhinandansharma.mp3;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.MediaController.MediaPlayerControl;
 import android.content.ComponentName;
@@ -59,7 +60,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         Intent StartSongService = new Intent(this, MusicService.class);
         bindService(StartSongService, mConnection, Context.BIND_AUTO_CREATE);
 
-        //startService(StartSongService);
+        startService(StartSongService);
     }
 
     @Override
@@ -110,7 +111,8 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     protected void onPause(){
         super.onPause();
         paused=true;
-        Log.d("abhi","onPause_playing_activity");
+        Log.d("abhi", "onPause_playing_activity");
+
 
 
 
@@ -119,13 +121,15 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     @Override
     protected void onDestroy() {
         Log.d("abhi", "onDestroy_playing_activity");
+        stopService(intent);
+
         if(player != null) {
             player.release();
             // Set the MediaPlayer to null to avoid IlLegalStateException
             // when call mp.reset() after launching the app again
             player = null;
         }
-        super.onDestroy();
+
 
         try {
         if (mBound) {
@@ -134,6 +138,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         } catch (Exception e) {
 
         }
+        super.onDestroy();
     }
 
 
@@ -269,4 +274,9 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     public int getAudioSessionId() {
         return 0;
     }
+
+
+
+
+
 }
