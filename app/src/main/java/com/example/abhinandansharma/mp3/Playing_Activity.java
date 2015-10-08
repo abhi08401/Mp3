@@ -172,7 +172,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
             }
         });
         controller.setMediaPlayer(Playing_Activity.this);
-        controller.setAnchorView(findViewById(R.id.song_list));
+        controller.setAnchorView(findViewById(R.id.playing_activity));
         controller.setEnabled(true);
         controller.show();
 

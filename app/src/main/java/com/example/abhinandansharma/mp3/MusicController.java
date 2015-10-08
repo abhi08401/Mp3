@@ -9,7 +9,7 @@ import android.widget.MediaController;
  * Created by abhinandan.sharma on 10/5/2015.
  */
 public class MusicController extends MediaController {
-    public  MediaController mediaController;
+    public MediaController mediaController;
 
     /**
      * Create a new MediaController from a session's token.
@@ -26,10 +26,7 @@ public class MusicController extends MediaController {
     @Override
     public void hide(){}
 
-    @Override
-    public void show() {
-        super.show();
-    }
+
 }
 
 
