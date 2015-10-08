@@ -60,7 +60,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
         Intent StartSongService = new Intent(this, MusicService.class);
         bindService(StartSongService, mConnection, Context.BIND_AUTO_CREATE);
 
-        startService(StartSongService);
+        //startService(StartSongService);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class Playing_Activity extends Activity implements MediaPlayerControl {
     @Override
     protected void onDestroy() {
         Log.d("abhi", "onDestroy_playing_activity");
-        stopService(intent);
+        //stopService(intent);
 
         if(player != null) {
             player.release();
